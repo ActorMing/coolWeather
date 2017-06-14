@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <!-- 数据库名称 -->
+    <dbname value="cool_weather" />
+
+    <!-- 数据库版本 -->
+    <version value="1" />
+
+    <!-- list:主要有哪些DataSupport的类 -->
+    <list>
+        <!-- Province 省份 -->
+        <mapping class="com.lazy.testproject1_weather.db.Province" />
+        <!-- City 城市 -->
+        <mapping class="com.lazy.testproject1_weather.db.City" />
+        <!-- County 县 -->
+        <mapping class="com.lazy.testproject1_weather.db.County" />
+    </list>
+</litepal>

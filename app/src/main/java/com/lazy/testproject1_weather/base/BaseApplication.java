@@ -2,6 +2,9 @@ package com.lazy.testproject1_weather.base;
 
 import android.app.Application;
 
+import org.litepal.LitePal;
+import org.litepal.LitePalApplication;
+
 /**
  * BaseApplication
  * <p>
@@ -13,5 +16,7 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        LitePal.initialize(this);
     }
 }
