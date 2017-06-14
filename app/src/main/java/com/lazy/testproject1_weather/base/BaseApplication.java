@@ -3,7 +3,6 @@ package com.lazy.testproject1_weather.base;
 import android.app.Application;
 
 import org.litepal.LitePal;
-import org.litepal.LitePalApplication;
 
 /**
  * BaseApplication
