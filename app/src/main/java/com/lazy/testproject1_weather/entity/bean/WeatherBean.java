@@ -1,4 +1,4 @@
-package com.lazy.testproject1_weather.bean;
+package com.lazy.testproject1_weather.entity.bean;
 
 import java.io.Serializable;
 import java.util.List;

@@ -22,6 +22,10 @@ android {
 }
 
 dependencies {
+
+    // FastJson https://github.com/alibaba/fastjson
+    compile 'com.alibaba:fastjson:1.1.58.android'
+
     // RxJava & RxAndroid
     // GitHub Address:https://github.com/ReactiveX/RxAndroid
     // 博客教程:http://blog.csdn.net/yyh352091626/article/details/53304728
@@ -32,8 +36,14 @@ dependencies {
     // Retrofit & Retrofit-RxJava-Adapter & RetrofitConverterFactory(gson) & OkHttpInterceptor
     compile 'com.squareup.retrofit2:retrofit:2.+'
     compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.+'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.squareup.okhttp3:logging-interceptor:3.+'
+
+    // http://blog.csdn.net/soslinken/article/details/50832958
+    compile 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
+//    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+
+    // 字符串装换工厂
+    compile 'com.squareup.retrofit2:converter-scalars:2.0.0'
 
     /***                             Dagger2 依赖                    ***/
     compile 'com.google.dagger:dagger:2.+'

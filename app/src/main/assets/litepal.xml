@@ -9,10 +9,10 @@
     <!-- list:主要有哪些DataSupport的类 -->
     <list>
         <!-- Province 省份 -->
-        <mapping class="com.lazy.testproject1_weather.db.Province" />
+        <mapping class="com.lazy.testproject1_weather.entity.datasupport.Province" />
         <!-- City 城市 -->
-        <mapping class="com.lazy.testproject1_weather.db.City" />
+        <mapping class="com.lazy.testproject1_weather.entity.datasupport.City" />
         <!-- County 县 -->
-        <mapping class="com.lazy.testproject1_weather.db.County" />
+        <mapping class="com.lazy.testproject1_weather.entity.datasupport.County" />
     </list>
 </litepal>

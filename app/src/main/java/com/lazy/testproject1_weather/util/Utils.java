@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.lazy.testproject1_weather.base.BaseApplication;
+
 /**
  * 工具类
  * <p>
@@ -20,7 +22,8 @@ public class Utils {
      *
      * @return
      */
-    public static int networkIsConnected(Context context) {
+    public static int networkIsConnected() {
+        Context context = BaseApplication.getAppContext();
         if (context != null) {
             ConnectivityManager connectivityManager = (ConnectivityManager)
                     context.getSystemService(Context.CONNECTIVITY_SERVICE);

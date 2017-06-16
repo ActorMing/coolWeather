@@ -11,6 +11,11 @@ public class ConstantUtils {
     private ConstantUtils() {
     }
 
+    /**
+     * BaseUrl
+     */
+    public static final String BASE_URL = "http://guolin.tech/api/";
+
 
     /**
      * OkHttpCache缓存文件
@@ -43,4 +48,11 @@ public class ConstantUtils {
     public static final int NETWORK_DISABLE = -1; // 网络不可用
     public static final int NETWORK_STATE_WIFI = 0; // wifi
     public static final int NETWORK_STATE_MOBILE = 1; // mobile
+
+    /**
+     * 查询省份、城市、县
+     */
+    public static final int LEVEL_PROVINCE = 0;
+    public static final int LEVEL_CITY = 1;
+    public static final int LEVEL_COUNTY = 2;
 }

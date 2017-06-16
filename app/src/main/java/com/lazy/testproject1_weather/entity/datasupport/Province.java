@@ -1,4 +1,4 @@
-package com.lazy.testproject1_weather.db;
+package com.lazy.testproject1_weather.entity.datasupport;
 
 import org.litepal.crud.DataSupport;
 
