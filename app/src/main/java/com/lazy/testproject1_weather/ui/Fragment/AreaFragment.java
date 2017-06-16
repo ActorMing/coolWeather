@@ -3,6 +3,7 @@ package com.lazy.testproject1_weather.ui.Fragment;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -23,6 +24,7 @@ import com.lazy.testproject1_weather.entity.datasupport.City;
 import com.lazy.testproject1_weather.entity.datasupport.County;
 import com.lazy.testproject1_weather.entity.datasupport.Province;
 import com.lazy.testproject1_weather.mvp.contract.AreaContract;
+import com.lazy.testproject1_weather.ui.activity.WeatherActivity;
 import com.lazy.testproject1_weather.util.ConstantUtils;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import static com.lazy.testproject1_weather.util.ConstantUtils.LEVEL_CITY;
+import static com.lazy.testproject1_weather.util.ConstantUtils.LEVEL_COUNTY;
 import static com.lazy.testproject1_weather.util.ConstantUtils.LEVEL_PROVINCE;
 
 /**
@@ -125,6 +128,12 @@ public class AreaFragment extends Fragment implements AreaContract.View {
                     queryCities(provinceList.get(position));
                 } else if (currentLevel == LEVEL_CITY) {
                     queryCounties(cityList.get(position));
+                } else if (currentLevel == LEVEL_COUNTY) {
+                    String weatherId = countyList.get(position).getWeatherId();
+                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                    intent.putExtra("weather_id", weatherId);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });

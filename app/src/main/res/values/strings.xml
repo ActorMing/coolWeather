@@ -3,4 +3,9 @@
 
     <string name="china">中国</string>
     <string name="loading">正在加载...</string>
+    <string name="forecast">预报</string>
+    <string name="aqi">空气质量</string>
+    <string name="aqi_desc">AQI指数</string>
+    <string name="pm25_desc">PM2.5指数</string>
+    <string name="live_suggestion">生活建议</string>
 </resources>

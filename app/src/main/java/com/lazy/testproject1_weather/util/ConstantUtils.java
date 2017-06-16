@@ -16,6 +16,10 @@ public class ConstantUtils {
      */
     public static final String BASE_URL = "http://guolin.tech/api/";
 
+    /**
+     * 天气控制台申请的key
+     */
+    public static final String APP_KEY = "d863c753a8c845b3a78fa29324e63d4a";
 
     /**
      * OkHttpCache缓存文件
