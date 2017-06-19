@@ -50,12 +50,14 @@ public class WeatherPresenter implements WeatherContract.Presenter {
                                     edit.putString("weather", String.valueOf(o));
                                     edit.apply();
                                     view.showWeatherInfo(weatherBean);
+                                    view.stopSwipeRefresh();
                                 }
                             }
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(@NonNull Throwable throwable) throws Exception {
                                 Log.e("throwable", "" + throwable);
+                                view.stopSwipeRefresh();
                             }
                         });
             } catch (Exception e) {

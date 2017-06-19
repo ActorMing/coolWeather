@@ -8,9 +8,14 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -35,12 +40,18 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.Vie
 
     private Context mContext;
 
+    public DrawerLayout drawerLayout;
+
+    public SwipeRefreshLayout swipe_layout_weather;
+
     private ScrollView scrollViewWeather;
 
     // 城市、更新时间、度数、天气信息、空气指数、pm2.5、舒适度、洗车、运动指数
     private TextView tvCity, tvUpdateTime, tvDegree, tvWeatherInfo, tvAqi, tvPm25, tvComfort, tvWashCar, tvSport;
 
     private LinearLayout linearLayoutForecast; // 预测天气布局
+
+    private Button btnNavigation;
 
     private ImageView ivBingPic;
 
@@ -76,6 +87,8 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.Vie
 
     private void initViews() {
         mContext = this;
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_weather);
+        swipe_layout_weather = (SwipeRefreshLayout) findViewById(R.id.swipe_layout_weather);
         scrollViewWeather = (ScrollView) findViewById(R.id.sv_weather);
         tvCity = (TextView) findViewById(R.id.tv_title_city);
         tvUpdateTime = (TextView) findViewById(R.id.tv_update_time);
@@ -86,8 +99,16 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.Vie
         tvComfort = (TextView) findViewById(R.id.tv_comfort);
         tvWashCar = (TextView) findViewById(R.id.tv_wash_car);
         tvSport = (TextView) findViewById(R.id.tv_wash_car);
+        btnNavigation = (Button) findViewById(R.id.btn_nav);
         linearLayoutForecast = (LinearLayout) findViewById(R.id.linear_layout_forecast);
         ivBingPic = (ImageView) findViewById(R.id.iv_bing_pic);
+
+
+        initListener();
+    }
+
+    private void initListener() {
+        swipe_layout_weather.setColorSchemeResources(R.color.colorPrimary);
 
         SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String bing_pic = defaultSharedPreferences.getString("bing_pic", null);
@@ -100,14 +121,47 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.Vie
         }
         String weatherStr = defaultSharedPreferences.getString("weather", null);
         if (!TextUtils.isEmpty(weatherStr)) {  // 有数据缓存直接从缓存中获取json数据
-            defaultSharedPreferences.edit().remove("weather").apply();
             WeatherBean weatherBean = JSONObject.parseObject(weatherStr, WeatherBean.class);
+            weatherId = weatherBean.getHeWeather().get(0).getBasic().getId();
             showWeatherInfo(weatherBean);
         } else { // 无缓存去网络请求数据
             weatherId = getIntent().getStringExtra("weather_id");
             scrollViewWeather.setVisibility(View.INVISIBLE);
             presenter.getWeatherById();
         }
+
+        // 下拉刷新
+        swipe_layout_weather.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData(null);
+            }
+        });
+
+        if (scrollViewWeather != null) {
+            scrollViewWeather.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+                @Override
+                public void onScrollChanged() {
+                    if (swipe_layout_weather != null) {
+                        swipe_layout_weather.setEnabled(scrollViewWeather.getScrollY() == 0);
+                    }
+                }
+            });
+        }
+
+        btnNavigation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(Gravity.START);
+            }
+        });
+    }
+
+    public void refreshData(String weatherId) {
+        if (!TextUtils.isEmpty(weatherId)) {
+            this.weatherId = weatherId;
+        }
+        presenter.getWeatherById();
     }
 
     @Override
@@ -181,5 +235,10 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.Vie
     @Override
     public Activity getActivity() {
         return WeatherActivity.this;
+    }
+
+    @Override
+    public void stopSwipeRefresh() {
+        swipe_layout_weather.setRefreshing(false);
     }
 }

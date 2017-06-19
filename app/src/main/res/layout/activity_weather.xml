@@ -10,28 +10,49 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
 
-    <ScrollView
-        android:id="@+id/sv_weather"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout_weather"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:scrollbars="none">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_layout_weather"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <include layout="@layout/weather_title" />
+            <ScrollView
+                android:id="@+id/sv_weather"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:scrollbars="none">
 
-            <include layout="@layout/now" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    android:orientation="vertical">
 
-            <include layout="@layout/forecast" />
+                    <include layout="@layout/weather_title" />
 
-            <include layout="@layout/aqi" />
+                    <include layout="@layout/now" />
 
-            <include layout="@layout/suggestion" />
-        </LinearLayout>
-    </ScrollView>
+                    <include layout="@layout/forecast" />
+
+                    <include layout="@layout/aqi" />
+
+                    <include layout="@layout/suggestion" />
+                </LinearLayout>
+            </ScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <fragment
+            android:id="@+id/fragment_area_weather"
+            android:name="com.lazy.testproject1_weather.ui.Fragment.AreaFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start" />
+    </android.support.v4.widget.DrawerLayout>
+
+
 </FrameLayout>

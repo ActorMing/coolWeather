@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ import com.lazy.testproject1_weather.entity.datasupport.City;
 import com.lazy.testproject1_weather.entity.datasupport.County;
 import com.lazy.testproject1_weather.entity.datasupport.Province;
 import com.lazy.testproject1_weather.mvp.contract.AreaContract;
+import com.lazy.testproject1_weather.ui.activity.MainActivity;
 import com.lazy.testproject1_weather.ui.activity.WeatherActivity;
 import com.lazy.testproject1_weather.util.ConstantUtils;
 
@@ -130,10 +130,19 @@ public class AreaFragment extends Fragment implements AreaContract.View {
                     queryCounties(cityList.get(position));
                 } else if (currentLevel == LEVEL_COUNTY) {
                     String weatherId = countyList.get(position).getWeatherId();
-                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
-                    intent.putExtra("weather_id", weatherId);
-                    startActivity(intent);
-                    getActivity().finish();
+
+                    // 如果getActivity属于MainActivity那么逻辑不变
+                    if (getActivity() instanceof MainActivity) {
+                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                        intent.putExtra("weather_id", weatherId);
+                        startActivity(intent);
+                        getActivity().finish();
+                    } else if (getActivity() instanceof WeatherActivity) { // 如果getActivity属于WeatherActivity那么关闭滑动菜单,刷新数据
+                        WeatherActivity weatherActivity = (WeatherActivity) getActivity();
+                        weatherActivity.drawerLayout.closeDrawers();
+                        weatherActivity.swipe_layout_weather.setEnabled(true);
+                        weatherActivity.refreshData(weatherId);
+                    }
                 }
             }
         });

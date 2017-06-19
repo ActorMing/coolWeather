@@ -52,6 +52,11 @@ public interface WeatherContract {
         String getWeatherId();
 
         Activity getActivity();
+
+        /**
+         * 停止刷新
+         */
+        void stopSwipeRefresh();
     }
 
     interface Presenter {
