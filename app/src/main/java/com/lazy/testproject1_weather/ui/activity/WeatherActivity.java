@@ -3,6 +3,7 @@ package com.lazy.testproject1_weather.ui.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -31,6 +32,7 @@ import com.lazy.testproject1_weather.di.component.DaggerWeatherComponent;
 import com.lazy.testproject1_weather.di.module.WeatherModule;
 import com.lazy.testproject1_weather.entity.bean.WeatherBean;
 import com.lazy.testproject1_weather.mvp.contract.WeatherContract;
+import com.lazy.testproject1_weather.service.AutoUpdateService;
 
 import java.util.List;
 
@@ -62,6 +64,7 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.Vie
     @Inject
     WeatherContract.Presenter presenter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +86,7 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.Vie
                 .weatherModule(new WeatherModule(this))
                 .build()
                 .inject(this);
+
     }
 
     private void initViews() {
@@ -184,12 +188,16 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.Vie
 
     @Override
     public void showWeatherInfo(WeatherBean weatherBean) {
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
         WeatherBean.HeWeatherBean heWeatherBean = weatherBean.getHeWeather().get(0);
         if (heWeatherBean == null) {
             dismissDialog();
             Toast.makeText(mContext, "获取天气信息失败", Toast.LENGTH_SHORT).show();
             return;
         }
+
+
         String cityName = heWeatherBean.getBasic().getCity();
         String updateTime = heWeatherBean.getBasic().getUpdate().getLoc().split(" ")[1];
         String degree = heWeatherBean.getNow().getTmp() + "°C";

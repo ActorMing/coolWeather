@@ -1,5 +1,6 @@
 package com.lazy.testproject1_weather.mvp.presenter;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.lazy.testproject1_weather.di.annotataion.WeatherServer;
 import com.lazy.testproject1_weather.entity.bean.WeatherBean;
 import com.lazy.testproject1_weather.mvp.contract.WeatherContract;
+import com.lazy.testproject1_weather.service.AutoUpdateService;
 import com.lazy.testproject1_weather.util.RxJavaSchedulersUtil;
 
 import io.reactivex.Flowable;
