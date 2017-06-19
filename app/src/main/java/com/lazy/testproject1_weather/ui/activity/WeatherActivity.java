@@ -100,6 +100,7 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.Vie
         }
         String weatherStr = defaultSharedPreferences.getString("weather", null);
         if (!TextUtils.isEmpty(weatherStr)) {  // 有数据缓存直接从缓存中获取json数据
+            defaultSharedPreferences.edit().remove("weather").apply();
             WeatherBean weatherBean = JSONObject.parseObject(weatherStr, WeatherBean.class);
             showWeatherInfo(weatherBean);
         } else { // 无缓存去网络请求数据
